@@ -36,13 +36,29 @@
   <!-- Data Business Canvas Taxonomy ConceptScheme -->
   <skos:ConceptScheme rdf:about="#DataBusinessTaxonomy">
     <rdfs:label>Data Business Canvas Taxonomy</rdfs:label>
-    <rdfs:comment>Hierarchical classification of data business model concepts</rdfs:comment>
-    <dcterms:description>Enables browsable navigation of business model components from strategic to operational levels</dcterms:description>
+    <rdfs:comment>Hierarchical classification of data business model concepts following complete Business Model Canvas structure</rdfs:comment>
+    <dcterms:description>Enables browsable navigation of business model components from strategic to operational levels, covering all 9 BMC building blocks adapted for data businesses</dcterms:description>
     <rdfs:seeAlso rdf:resource="#DataBusinessCanvas"/>
-    <rdfs:seeAlso rdf:resource="#ValueProposition"/>
+    <!-- Customer-facing components -->
     <rdfs:seeAlso rdf:resource="#CustomerSegment"/>
+    <rdfs:seeAlso rdf:resource="#ValueProposition"/>
+    <rdfs:seeAlso rdf:resource="#Channel"/>
+    <rdfs:seeAlso rdf:resource="#CustomerRelationship"/>
+    <rdfs:seeAlso rdf:resource="#RevenueStream"/>
+    <!-- Internal components -->
+    <rdfs:seeAlso rdf:resource="#KeyResource"/>
+    <rdfs:seeAlso rdf:resource="#KeyActivity"/>
+    <rdfs:seeAlso rdf:resource="#KeyPartner"/>
+    <rdfs:seeAlso rdf:resource="#CostStructure"/>
+    <!-- Data-specific extensions -->
     <rdfs:seeAlso rdf:resource="#DataAsset"/>
     <rdfs:seeAlso rdf:resource="#IntelligenceCapability"/>
+    <rdfs:seeAlso rdf:resource="#DataProduct"/>
+    <rdfs:seeAlso rdf:resource="#DataService"/>
+    <rdfs:seeAlso rdf:resource="#DataGovernanceRole"/>
+    <rdfs:seeAlso rdf:resource="#DataMonetizationPattern"/>
+    <rdfs:seeAlso rdf:resource="#DataLifecycleStage"/>
+    <rdfs:seeAlso rdf:resource="#DataQualityDimension"/>
   </skos:ConceptScheme>
 
   <!-- Executive Strategy Taxonomy ConceptScheme -->
@@ -72,15 +88,26 @@
     <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Organization"/>
     <rdfs:subClassOf rdf:resource="http://business-model-canvas.org/ontology#BusinessModel"/>
     <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
-    <!-- Hierarchical SKOS relationships for taxonomic browsing -->
-    <skos:narrower rdf:resource="#ValueProposition"/>
+    <!-- Hierarchical SKOS relationships for taxonomic browsing - Complete BMC structure -->
+    <!-- Customer-facing building blocks -->
     <skos:narrower rdf:resource="#CustomerSegment"/>
+    <skos:narrower rdf:resource="#ValueProposition"/>
+    <skos:narrower rdf:resource="#Channel"/>
+    <skos:narrower rdf:resource="#CustomerRelationship"/>
+    <skos:narrower rdf:resource="#RevenueStream"/>
+    <!-- Internal building blocks -->
+    <skos:narrower rdf:resource="#KeyResource"/>
+    <skos:narrower rdf:resource="#KeyActivity"/>
+    <skos:narrower rdf:resource="#KeyPartner"/>
+    <skos:narrower rdf:resource="#CostStructure"/>
+    <!-- Data-specific extensions (already subtypes of KeyResource/KeyActivity) -->
     <skos:narrower rdf:resource="#DataAsset"/>
     <skos:narrower rdf:resource="#IntelligenceCapability"/>
+    <!-- Strategic integration -->
     <skos:related rdf:resource="#ExecutiveTarget"/>
     <skos:related rdf:resource="#SemanticSOWContract"/>
     <rdfs:label>Data Business Canvas</rdfs:label>
-    <rdfs:comment>A business model specifically focused on data-driven value creation, extending Gist Organization</rdfs:comment>
+    <rdfs:comment>A business model specifically focused on data-driven value creation, extending Gist Organization with complete BMC structure</rdfs:comment>
     <skos:scopeNote>This concept extends traditional Business Model Canvas methodology to emphasize data assets and intelligence capabilities as core business components. Unlike generic business models that treat data as supporting infrastructure, this model positions data assets as primary value drivers and revenue generators. Lambda implementations must consider: (1) Data lineage tracking from ingestion to business value creation, (2) Multi-tenant data governance with role-based access controls, (3) Real-time data quality monitoring with automated alerts, (4) Cross-functional data product lifecycle management, (5) Semantic data discovery through ontology-based cataloging. Implementation requires event-driven architecture supporting both batch and streaming data processing, with data contracts enforcing schema evolution and backward compatibility. Consider serverless data mesh patterns for scalable domain-driven data architecture.</skos:scopeNote>
     <skos:example>Supply chain visibility platform for Turkish olive oil producers with predictive analytics for seasonal demand forecasting and real-time supplier performance dashboards</skos:example>
     <rdfs:seeAlso rdf:resource="#ValueProposition"/>
@@ -185,7 +212,230 @@
     <rdfs:seeAlso rdf:resource="http://purl.org/dc/terms/type"/>
   </owl:Class>
 
+  <!-- ====================================================================== -->
+  <!-- DATA-SPECIFIC BUSINESS CONCEPTS (DBC Extensions)                       -->
+  <!-- ====================================================================== -->
+
+  <!-- Data Product - Packaged data offering -->
+  <owl:Class rdf:about="#DataProduct">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="#ValueProposition"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#ValueProposition"/>
+    <skos:related rdf:resource="#DataAsset"/>
+    <skos:related rdf:resource="#DataService"/>
+    <rdfs:label>Data Product</rdfs:label>
+    <rdfs:comment>Packaged, productized data offering with defined schema, SLA, and business value</rdfs:comment>
+    <skos:scopeNote>Data products are self-contained, discoverable, and addressable data assets with clear ownership, documented schemas, quality guarantees, and versioning. Unlike raw data assets, products have explicit consumer contracts, usage analytics, and lifecycle management. They implement data mesh principles with domain ownership and federated governance.</skos:scopeNote>
+    <skos:example>Supplier Risk Score API providing daily-updated risk ratings for 10,000+ Mediterranean food suppliers with 99.9% uptime SLA and JSON schema v2.1</skos:example>
+  </owl:Class>
+
+  <!-- Data Service - Ongoing data delivery mechanism -->
+  <owl:Class rdf:about="#DataService">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="#Channel"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#Channel"/>
+    <skos:related rdf:resource="#DataProduct"/>
+    <skos:related rdf:resource="#DataAsset"/>
+    <rdfs:label>Data Service</rdfs:label>
+    <rdfs:comment>Operational service delivering data products to consumers via API, streaming, or batch mechanisms</rdfs:comment>
+    <skos:scopeNote>Data services provide continuous access to data products with defined interfaces (REST API, GraphQL, event streams, batch exports), authentication/authorization, rate limiting, monitoring, and support. Services abstract technical complexity and provide consistent access patterns across heterogeneous data sources.</skos:scopeNote>
+    <skos:example>Real-time supplier inventory WebSocket feed pushing updates every 5 minutes with OAuth2 authentication and 1000 req/hour rate limit</skos:example>
+  </owl:Class>
+
+  <!-- Data Governance Role - Responsibility in data management -->
+  <owl:Class rdf:about="#DataGovernanceRole">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#KeyActivity"/>
+    <skos:related rdf:resource="#DataAsset"/>
+    <skos:related rdf:resource="#DataQualityStandard"/>
+    <rdfs:label>Data Governance Role</rdfs:label>
+    <rdfs:comment>Defined responsibility for data stewardship, quality, security, and compliance</rdfs:comment>
+    <skos:scopeNote>Governance roles establish accountability for data assets across their lifecycle including data owners (business accountability), data stewards (operational management), data custodians (technical implementation), and data consumers (appropriate usage). Roles define decision rights for access, quality standards, retention, and business glossary management.</skos:scopeNote>
+    <skos:example>Supply Chain Data Steward role responsible for supplier master data quality, quarterly audits, and business glossary maintenance for 50+ data elements</skos:example>
+  </owl:Class>
+
+  <!-- Data Monetization Pattern - Revenue generation approach -->
+  <owl:Class rdf:about="#DataMonetizationPattern">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="#RevenueStream"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#RevenueStream"/>
+    <skos:related rdf:resource="#DataProduct"/>
+    <skos:related rdf:resource="#ValueProposition"/>
+    <rdfs:label>Data Monetization Pattern</rdfs:label>
+    <rdfs:comment>Strategic approach to generating revenue from data assets and intelligence capabilities</rdfs:comment>
+    <skos:scopeNote>Monetization patterns include: (1) Direct data sales (licensing datasets or API access), (2) Data-enhanced products (embedding insights into existing offerings), (3) Data-as-a-Service subscriptions (recurring access fees), (4) Marketplace/brokerage (facilitating data exchange for commission), (5) Insights-as-a-Service (selling analytics not raw data), (6) Advertising/targeting (using data to improve ad relevance). Pattern selection depends on data uniqueness, customer willingness-to-pay, and competitive landscape.</skos:scopeNote>
+    <skos:example>Tiered subscription model: Basic API access ($500/month, 10K requests), Professional ($2000/month, 100K requests, priority support), Enterprise (custom pricing, unlimited requests, dedicated account manager)</skos:example>
+  </owl:Class>
+
+  <!-- Data Lifecycle Stage - Maturity phase of data asset -->
+  <owl:Class rdf:about="#DataLifecycleStage">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:related rdf:resource="#DataAsset"/>
+    <skos:related rdf:resource="#DataProduct"/>
+    <rdfs:label>Data Lifecycle Stage</rdfs:label>
+    <rdfs:comment>Phase in data asset evolution from acquisition through archival or deletion</rdfs:comment>
+    <skos:scopeNote>Lifecycle stages include: (1) Acquisition (sourcing and ingestion), (2) Curation (cleansing, enrichment, standardization), (3) Storage (optimization for access patterns), (4) Processing (transformation and analysis), (5) Distribution (delivery to consumers), (6) Archival (long-term retention), (7) Deletion (secure disposal). Each stage has distinct cost structures, SLAs, and governance requirements.</skos:scopeNote>
+    <skos:example>Supplier master data lifecycle: Daily acquisition via API → Real-time validation and enrichment → Hot storage in PostgreSQL → Nightly aggregation for analytics → Quarterly archival to S3 Glacier → 7-year retention before GDPR-compliant deletion</skos:example>
+  </owl:Class>
+
+  <!-- Data Quality Dimension - Aspect of data quality measurement -->
+  <owl:Class rdf:about="#DataQualityDimension">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="#DataQualityStandard"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataQualityStandard"/>
+    <skos:related rdf:resource="#DataAsset"/>
+    <rdfs:label>Data Quality Dimension</rdfs:label>
+    <rdfs:comment>Measurable aspect of data quality with defined metrics and thresholds</rdfs:comment>
+    <skos:scopeNote>Standard quality dimensions include: (1) Accuracy (correctness vs. reality), (2) Completeness (presence of required values), (3) Consistency (agreement across systems), (4) Timeliness (freshness for business needs), (5) Validity (conformance to schema/rules), (6) Uniqueness (absence of duplicates). Each dimension requires specific measurement techniques and remediation workflows.</skos:scopeNote>
+    <skos:example>Supplier address accuracy dimension: 95% threshold measured by geocoding validation, monthly spot checks against official registries, automated remediation workflows for discrepancies</skos:example>
+  </owl:Class>
+
+  <!-- Channels - How value reaches customers -->
+  <owl:Class rdf:about="#Channel">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:related rdf:resource="#CustomerSegment"/>
+    <skos:related rdf:resource="#ValueProposition"/>
+    <rdfs:label>Channel</rdfs:label>
+    <rdfs:comment>Distribution and communication channel through which value propositions reach customer segments</rdfs:comment>
+    <skos:scopeNote>Represents the pathways through which data products, insights, and intelligence capabilities are delivered to customers. In data business models, channels encompass both technical delivery mechanisms (APIs, data feeds, dashboards, embedded analytics) and business delivery models (self-service portals, managed services, white-label solutions). Lambda implementations require: (1) Multi-channel API gateway with rate limiting, authentication, and usage analytics per customer segment, (2) Channel-specific data transformation pipelines adapting to delivery format requirements (REST, GraphQL, Webhook, Batch file drops), (3) Channel performance monitoring tracking delivery SLAs, latency, throughput, and customer engagement metrics, (4) Channel cost attribution for profitability analysis by delivery mechanism, (5) A/B testing frameworks for channel optimization and customer preference learning. Architecture should support omnichannel strategies where customers can consume data through multiple synchronized channels with consistent experience.</skos:scopeNote>
+    <skos:example>Self-service API portal providing real-time supplier performance data, weekly email reports with predictive analytics insights, and embedded Power BI dashboards for procurement teams</skos:example>
+    <rdfs:seeAlso rdf:resource="#CustomerSegment"/>
+    <rdfs:seeAlso rdf:resource="#ValueProposition"/>
+    <rdfs:seeAlso rdf:resource="#CustomerRelationship"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/DeliveryMethod"/>
+  </owl:Class>
+
+  <!-- Customer Relationships - How to interact with segments -->
+  <owl:Class rdf:about="#CustomerRelationship">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:related rdf:resource="#CustomerSegment"/>
+    <skos:related rdf:resource="#Channel"/>
+    <rdfs:label>Customer Relationship</rdfs:label>
+    <rdfs:comment>Type of relationship established and maintained with specific customer segments</rdfs:comment>
+    <skos:scopeNote>Defines the engagement model and support structure for different customer segments consuming data products. Data businesses require sophisticated relationship strategies balancing automation with high-touch support based on customer value and complexity. Lambda implementations should support: (1) Tiered customer success programs with automated onboarding, training resources, and escalation paths based on customer segment and contract value, (2) Usage analytics and adoption tracking identifying at-risk customers and expansion opportunities, (3) Proactive data quality alerts and issue resolution with SLA-based response times, (4) Customer feedback loops integrated into product roadmap planning, (5) Community platforms for peer-to-peer knowledge sharing and use case discovery. Consider implementing product-led growth motions for self-service segments and white-glove concierge services for enterprise accounts.</skos:scopeNote>
+    <skos:example>Automated onboarding with interactive tutorials for SMB customers, dedicated account management with quarterly business reviews for enterprise clients, and community forum with expert office hours for developer ecosystem</skos:example>
+    <rdfs:seeAlso rdf:resource="#CustomerSegment"/>
+    <rdfs:seeAlso rdf:resource="#Channel"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/CustomerService"/>
+  </owl:Class>
+
+  <!-- Key Activities - Core business activities -->
+  <owl:Class rdf:about="#KeyActivity">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <rdfs:subClassOf rdf:resource="http://data-business-canvas.org/ontology#KeyActivity"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:narrower rdf:resource="#IntelligenceCapability"/>
+    <skos:related rdf:resource="#ValueProposition"/>
+    <skos:related rdf:resource="#KeyResource"/>
+    <rdfs:label>Key Activity</rdfs:label>
+    <rdfs:comment>Most important activities required to make the data business model work</rdfs:comment>
+    <skos:scopeNote>Encompasses the critical operational activities necessary to create, deliver, and capture value from data. Beyond technical data processing, this includes activities like data sourcing and acquisition, quality assurance and governance, product development and innovation, customer support and success, and platform operations and maintenance. Lambda implementations must architect for: (1) Activity-based cost accounting tracking resource consumption and ROI by activity type, (2) Process automation identifying high-volume repetitive activities suitable for ML-driven automation, (3) Activity dependency mapping for critical path analysis and bottleneck identification, (4) Capacity planning and resource allocation optimizing activity throughput, (5) Continuous improvement frameworks measuring and optimizing activity efficiency over time. IntelligenceCapability is a specific subtype focusing on AI/ML transformation activities.</skos:scopeNote>
+    <skos:example>Daily data acquisition from 500+ supplier websites, real-time data quality validation and anomaly detection, weekly model retraining for demand forecasting, monthly customer success check-ins, and continuous platform security monitoring</skos:example>
+    <rdfs:seeAlso rdf:resource="#IntelligenceCapability"/>
+    <rdfs:seeAlso rdf:resource="#ValueProposition"/>
+    <rdfs:seeAlso rdf:resource="#DataProcessingTask"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/Action"/>
+  </owl:Class>
+
+  <!-- Key Resources - Strategic assets beyond data -->
+  <owl:Class rdf:about="#KeyResource">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <rdfs:subClassOf rdf:resource="http://data-business-canvas.org/ontology#KeyResource"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:narrower rdf:resource="#DataAsset"/>
+    <skos:related rdf:resource="#KeyActivity"/>
+    <skos:related rdf:resource="#ValueProposition"/>
+    <rdfs:label>Key Resource</rdfs:label>
+    <rdfs:comment>Most important strategic assets required to make the data business model work</rdfs:comment>
+    <skos:scopeNote>Represents critical assets beyond data including intellectual property (algorithms, models, domain expertise), technical infrastructure (cloud platforms, data pipelines, ML frameworks), human capital (data scientists, domain experts, customer success teams), brand and reputation, and strategic partnerships. Lambda implementations should track: (1) Resource utilization and ROI analysis across all asset categories, (2) Resource capacity planning with forecasting for growth scenarios, (3) Build-vs-buy analysis for strategic resource acquisition decisions, (4) Resource risk assessment and redundancy planning for business continuity, (5) Asset lifecycle management including depreciation, maintenance, and refresh cycles. DataAsset is a specific subtype focusing on data resources.</skos:scopeNote>
+    <skos:example>Proprietary demand forecasting algorithms (IP), AWS infrastructure with multi-region deployment (technical), team of 15 data scientists with supply chain domain expertise (human), established brand in Mediterranean agriculture vertical (intangible)</skos:example>
+    <rdfs:seeAlso rdf:resource="#DataAsset"/>
+    <rdfs:seeAlso rdf:resource="#KeyActivity"/>
+    <rdfs:seeAlso rdf:resource="#KeyPartner"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/Product"/>
+  </owl:Class>
+
+  <!-- Revenue Streams - How value is monetized -->
+  <owl:Class rdf:about="#RevenueStream">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:related rdf:resource="#ValueProposition"/>
+    <skos:related rdf:resource="#CustomerSegment"/>
+    <skos:related rdf:resource="#RevenueEvent"/>
+    <rdfs:label>Revenue Stream</rdfs:label>
+    <rdfs:comment>Ways the business generates revenue from customer segments</rdfs:comment>
+    <skos:scopeNote>Defines the monetization model and pricing strategy for data products and services. Data businesses typically employ hybrid revenue models combining subscription (recurring revenue for ongoing data access), usage-based (pay-per-query or API call), outcome-based (performance fees tied to business results), licensing (data asset or model licensing fees), and professional services (implementation and customization fees). Lambda implementations require: (1) Multi-model billing engine supporting complex pricing rules, tiered plans, usage metering, and overage charges, (2) Revenue recognition automation complying with accounting standards (ASC 606/IFRS 15), (3) Customer lifetime value (CLV) analytics and churn prediction models, (4) A/B testing frameworks for pricing optimization, (5) Contract and subscription management with automated renewals and expansion tracking. Architecture should support real-time usage tracking for accurate billing and enable flexible pricing experimentation.</skos:scopeNote>
+    <skos:example>Monthly subscription at €1,500/month for up to 10,000 API calls, usage-based pricing at €0.05 per additional API call, annual licensing fee of €50,000 for proprietary forecasting models, and professional services at €2,500/day for custom integration</skos:example>
+    <rdfs:seeAlso rdf:resource="#ValueProposition"/>
+    <rdfs:seeAlso rdf:resource="#CustomerSegment"/>
+    <rdfs:seeAlso rdf:resource="#RevenueEvent"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/PriceSpecification"/>
+  </owl:Class>
+
+  <!-- Cost Structure - Business costs and expenses -->
+  <owl:Class rdf:about="#CostStructure">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Category"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:related rdf:resource="#KeyActivity"/>
+    <skos:related rdf:resource="#KeyResource"/>
+    <skos:related rdf:resource="#CostEvent"/>
+    <rdfs:label>Cost Structure</rdfs:label>
+    <rdfs:comment>All costs and expenses incurred to operate the data business model</rdfs:comment>
+    <skos:scopeNote>Encompasses the full cost profile of operating a data business including infrastructure costs (cloud compute, storage, networking), data acquisition costs (licensing, partnerships, scraping infrastructure), personnel costs (engineering, data science, operations, sales), technology costs (SaaS tools, ML platforms, security), and customer acquisition costs. Data businesses typically exhibit high fixed costs (platform development, infrastructure baseline) with relatively low marginal costs per additional customer, enabling strong unit economics at scale. Lambda implementations should provide: (1) Activity-based costing allocating shared infrastructure costs to specific business activities and customer segments, (2) Cost optimization recommendations using FinOps principles for cloud resource efficiency, (3) Marginal cost analysis for pricing decisions and profitability modeling, (4) Budget forecasting with scenario planning for different growth trajectories, (5) Cost anomaly detection identifying unexpected spend increases. Architecture should support multi-dimensional cost allocation and real-time cost visibility.</skos:scopeNote>
+    <skos:example>AWS infrastructure €15,000/month (30%), data scientist salaries €45,000/month (45%), third-party data licenses €8,000/month (16%), and SaaS tools €4,500/month (9%)</skos:example>
+    <rdfs:seeAlso rdf:resource="#KeyActivity"/>
+    <rdfs:seeAlso rdf:resource="#KeyResource"/>
+    <rdfs:seeAlso rdf:resource="#CostEvent"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/MonetaryAmount"/>
+  </owl:Class>
+
   <!-- Key Partners as Gist Organizations -->
+  <owl:Class rdf:about="#KeyPartner">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Organization"/>
+    <skos:inScheme rdf:resource="#DataBusinessTaxonomy"/>
+    <skos:broader rdf:resource="#DataBusinessCanvas"/>
+    <skos:narrower rdf:resource="#DataProvider"/>
+    <skos:narrower rdf:resource="#TechnologyPartner"/>
+    <skos:related rdf:resource="#KeyActivity"/>
+    <skos:related rdf:resource="#KeyResource"/>
+    <rdfs:label>Key Partner</rdfs:label>
+    <rdfs:comment>Network of strategic partners and suppliers that make the business model work</rdfs:comment>
+    <skos:scopeNote>Represents strategic external organizations critical to business model execution including data providers (supplying source data), technology partners (providing infrastructure or specialized capabilities), distribution partners (accessing new customer segments), and ecosystem partners (complementary services enhancing value proposition). Partner strategies vary from transactional vendor relationships to deep strategic alliances with joint value creation. Lambda implementations should support: (1) Partner relationship management tracking performance, SLAs, and contract terms, (2) Partner contribution attribution measuring business value delivered by each partnership, (3) Partner risk assessment monitoring dependencies and developing contingency plans, (4) Partner collaboration platforms enabling data sharing, joint product development, and co-selling motions, (5) Partner ecosystem analytics identifying gaps and expansion opportunities. DataProvider and TechnologyPartner are specialized subtypes.</skos:scopeNote>
+    <skos:example>Strategic partnership with Turkish Agricultural Ministry for authoritative supplier certification data, technology alliance with Snowflake for data warehousing infrastructure, distribution partnership with SAP for embedded procurement analytics</skos:example>
+    <rdfs:seeAlso rdf:resource="#DataProvider"/>
+    <rdfs:seeAlso rdf:resource="#TechnologyPartner"/>
+    <rdfs:seeAlso rdf:resource="#KeyResource"/>
+    <rdfs:seeAlso rdf:resource="https://schema.org/Organization"/>
+  </owl:Class>
+
+  <!-- Data Provider as specialized Key Partner -->
   <owl:Class rdf:about="#DataProvider">
     <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
     <rdfs:subClassOf rdf:resource="https://w3id.org/semanticarts/ontology/gistCore#Organization"/>
@@ -306,6 +556,360 @@
   <!-- ====================================================================== -->
   <!-- CROSS-LEVEL PROPERTIES (Connecting the Hierarchy)                     -->
   <!-- ====================================================================== -->
+
+  <!-- ====================================================================== -->
+  <!-- BMC COMPONENT RELATIONSHIPS (Within Business Model Canvas)            -->
+  <!-- ====================================================================== -->
+
+  <!-- Channel to Customer Segment and Value Proposition -->
+  <owl:ObjectProperty rdf:about="#deliversValueThrough">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#ValueProposition"/>
+    <rdfs:range rdf:resource="#Channel"/>
+    <rdfs:label>delivers value through</rdfs:label>
+    <rdfs:comment>Links value proposition to delivery channels</rdfs:comment>
+    <skos:example>PredictiveSupplyChainAnalytics deliversValueThrough SelfServiceAPIPortal</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#reachesCustomerVia">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#Channel"/>
+    <rdfs:range rdf:resource="#CustomerSegment"/>
+    <rdfs:label>reaches customer via</rdfs:label>
+    <rdfs:comment>Links channel to customer segments it serves</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Customer Relationship to Customer Segment -->
+  <owl:ObjectProperty rdf:about="#maintainsRelationshipWith">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CustomerRelationship"/>
+    <rdfs:range rdf:resource="#CustomerSegment"/>
+    <rdfs:label>maintains relationship with</rdfs:label>
+    <rdfs:comment>Links relationship type to customer segment</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Key Activities to Value Proposition and Key Resources -->
+  <owl:ObjectProperty rdf:about="#enablesDeliveryOf">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyActivity"/>
+    <rdfs:range rdf:resource="#ValueProposition"/>
+    <rdfs:label>enables delivery of</rdfs:label>
+    <rdfs:comment>Links key activity to value proposition it enables</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#utilizesResource">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyActivity"/>
+    <rdfs:range rdf:resource="#KeyResource"/>
+    <rdfs:label>utilizes resource</rdfs:label>
+    <rdfs:comment>Links activity to resources it consumes</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isUtilizedBy">
+    <owl:inverseOf rdf:resource="#utilizesResource"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyResource"/>
+    <rdfs:range rdf:resource="#KeyActivity"/>
+    <rdfs:label>is utilized by</rdfs:label>
+    <rdfs:comment>Inverse of utilizesResource</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Key Partners to Key Activities and Resources -->
+  <owl:ObjectProperty rdf:about="#supportsActivity">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyPartner"/>
+    <rdfs:range rdf:resource="#KeyActivity"/>
+    <rdfs:label>supports activity</rdfs:label>
+    <rdfs:comment>Links partner to activities they enable</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#providesResource">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyPartner"/>
+    <rdfs:range rdf:resource="#KeyResource"/>
+    <rdfs:label>provides resource</rdfs:label>
+    <rdfs:comment>Links partner to resources they provide</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Revenue Stream to Customer Segment and Value Proposition -->
+  <owl:ObjectProperty rdf:about="#generatesRevenueFrom">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#RevenueStream"/>
+    <rdfs:range rdf:resource="#CustomerSegment"/>
+    <rdfs:label>generates revenue from</rdfs:label>
+    <rdfs:comment>Links revenue stream to customer segments</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#monetizes">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#RevenueStream"/>
+    <rdfs:range rdf:resource="#ValueProposition"/>
+    <rdfs:label>monetizes</rdfs:label>
+    <rdfs:comment>Links revenue stream to value proposition being monetized</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Cost Structure to Key Activities and Resources -->
+  <owl:ObjectProperty rdf:about="#incursCostFor">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CostStructure"/>
+    <rdfs:range rdf:resource="#KeyActivity"/>
+    <rdfs:label>incurs cost for</rdfs:label>
+    <rdfs:comment>Links cost structure to activities that generate costs</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#allocatesCostTo">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CostStructure"/>
+    <rdfs:range rdf:resource="#KeyResource"/>
+    <rdfs:label>allocates cost to</rdfs:label>
+    <rdfs:comment>Links cost structure to resources that incur costs</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- Missing Canonical BMC Relationships -->
+  <owl:ObjectProperty rdf:about="#servesCustomer">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#ValueProposition"/>
+    <rdfs:range rdf:resource="#CustomerSegment"/>
+    <rdfs:label>serves customer</rdfs:label>
+    <rdfs:comment>Specifies which customer segments the value proposition targets and serves</rdfs:comment>
+    <skos:example>RealTimeInventoryVisibility servesCustomer LogisticsManagers - the visibility solution directly serves logistics decision-makers</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#targetsSegment">
+    <owl:inverseOf rdf:resource="#servesCustomer"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CustomerSegment"/>
+    <rdfs:range rdf:resource="#ValueProposition"/>
+    <rdfs:label>targets segment</rdfs:label>
+    <rdfs:comment>Inverse relationship - customer segment is targeted by value proposition</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#enablesValueProposition">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyResource"/>
+    <rdfs:range rdf:resource="#ValueProposition"/>
+    <rdfs:label>enables value proposition</rdfs:label>
+    <rdfs:comment>Key resources that enable and support the creation of value propositions</rdfs:comment>
+    <skos:example>SupplierMasterDataAsset enablesValueProposition SupplierPerformanceScoring - the master data enables the scoring capability</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#requiresResource">
+    <owl:inverseOf rdf:resource="#enablesValueProposition"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#ValueProposition"/>
+    <rdfs:range rdf:resource="#KeyResource"/>
+    <rdfs:label>requires resource</rdfs:label>
+    <rdfs:comment>Inverse - value proposition requires specific key resources</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#incursCostFromPartner">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CostStructure"/>
+    <rdfs:range rdf:resource="#KeyPartner"/>
+    <rdfs:label>incurs cost from partner</rdfs:label>
+    <rdfs:comment>Cost structure elements driven by key partnerships</rdfs:comment>
+    <skos:example>DataInfrastructureCosts incursCostFromPartner AWSCloudServices - cloud hosting partnership drives infrastructure costs</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#contributesToCost">
+    <owl:inverseOf rdf:resource="#incursCostFromPartner"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyPartner"/>
+    <rdfs:range rdf:resource="#CostStructure"/>
+    <rdfs:label>contributes to cost</rdfs:label>
+    <rdfs:comment>Inverse - partner contributes to cost structure</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#incursCostFromResource">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CostStructure"/>
+    <rdfs:range rdf:resource="#KeyResource"/>
+    <rdfs:label>incurs cost from resource</rdfs:label>
+    <rdfs:comment>Cost structure elements driven by key resources (acquisition, maintenance, depreciation)</rdfs:comment>
+    <skos:example>DataStorageCosts incursCostFromResource DataLakeInfrastructure - data lake storage is a key resource driving costs</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#drivesResourceCost">
+    <owl:inverseOf rdf:resource="#incursCostFromResource"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyResource"/>
+    <rdfs:range rdf:resource="#CostStructure"/>
+    <rdfs:label>drives resource cost</rdfs:label>
+    <rdfs:comment>Inverse - resource drives costs in the cost structure</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#generatesRevenue">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#ValueProposition"/>
+    <rdfs:range rdf:resource="#RevenueStream"/>
+    <rdfs:label>generates revenue</rdfs:label>
+    <rdfs:comment>Value propositions that generate specific revenue streams</rdfs:comment>
+    <skos:example>PredictiveMaintenanceInsights generatesRevenue SubscriptionBasedDataService - insights create recurring subscription revenue</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isGeneratedBy">
+    <owl:inverseOf rdf:resource="#generatesRevenue"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#RevenueStream"/>
+    <rdfs:range rdf:resource="#ValueProposition"/>
+    <rdfs:label>is generated by</rdfs:label>
+    <rdfs:comment>Inverse - revenue stream is generated by value proposition</rdfs:comment>
+  </owl:ObjectProperty>
+
+  <!-- DataBusinessCanvas Composition Relationships (Canvas → Building Blocks) -->
+  <owl:ObjectProperty rdf:about="#definesCustomerSegment">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#CustomerSegment"/>
+    <rdfs:label>defines customer segment</rdfs:label>
+    <rdfs:comment>The business canvas defines and specifies its target customer segments</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesCustomerSegment LogisticsManagers</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesValueProposition">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#ValueProposition"/>
+    <rdfs:label>defines value proposition</rdfs:label>
+    <rdfs:comment>The business canvas defines value propositions offered to customers</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesValueProposition PredictiveInventoryOptimization</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesChannel">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#Channel"/>
+    <rdfs:label>defines channel</rdfs:label>
+    <rdfs:comment>The business canvas specifies channels for delivering value</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesChannel SelfServiceAPIPortal</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesCustomerRelationship">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#CustomerRelationship"/>
+    <rdfs:label>defines customer relationship</rdfs:label>
+    <rdfs:comment>The business canvas defines types of relationships with customer segments</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesCustomerRelationship DedicatedAccountManagement</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesRevenueStream">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#RevenueStream"/>
+    <rdfs:label>defines revenue stream</rdfs:label>
+    <rdfs:comment>The business canvas specifies revenue generation mechanisms</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesRevenueStream SubscriptionBasedDataService</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesKeyResource">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#KeyResource"/>
+    <rdfs:label>defines key resource</rdfs:label>
+    <rdfs:comment>The business canvas identifies critical resources required</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesKeyResource SupplierMasterDataAsset</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesKeyActivity">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#KeyActivity"/>
+    <rdfs:label>defines key activity</rdfs:label>
+    <rdfs:comment>The business canvas specifies essential activities for value delivery</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesKeyActivity RealTimeDataIngestion</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesKeyPartner">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#KeyPartner"/>
+    <rdfs:label>defines key partner</rdfs:label>
+    <rdfs:comment>The business canvas identifies critical partnerships and suppliers</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesKeyPartner AWSCloudServices</skos:example>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#definesCostStructure">
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:range rdf:resource="#CostStructure"/>
+    <rdfs:label>defines cost structure</rdfs:label>
+    <rdfs:comment>The business canvas outlines cost elements and drivers</rdfs:comment>
+    <skos:example>SupplyChainCanvas definesCostStructure DataInfrastructureCosts</skos:example>
+  </owl:ObjectProperty>
+
+  <!-- Inverse relationships: Building Blocks → Canvas -->
+  <owl:ObjectProperty rdf:about="#isCustomerSegmentOf">
+    <owl:inverseOf rdf:resource="#definesCustomerSegment"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CustomerSegment"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is customer segment of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isValuePropositionOf">
+    <owl:inverseOf rdf:resource="#definesValueProposition"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#ValueProposition"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is value proposition of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isChannelOf">
+    <owl:inverseOf rdf:resource="#definesChannel"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#Channel"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is channel of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isCustomerRelationshipOf">
+    <owl:inverseOf rdf:resource="#definesCustomerRelationship"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CustomerRelationship"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is customer relationship of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isRevenueStreamOf">
+    <owl:inverseOf rdf:resource="#definesRevenueStream"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#RevenueStream"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is revenue stream of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isKeyResourceOf">
+    <owl:inverseOf rdf:resource="#definesKeyResource"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyResource"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is key resource of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isKeyActivityOf">
+    <owl:inverseOf rdf:resource="#definesKeyActivity"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyActivity"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is key activity of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isKeyPartnerOf">
+    <owl:inverseOf rdf:resource="#definesKeyPartner"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#KeyPartner"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is key partner of</rdfs:label>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="#isCostStructureOf">
+    <owl:inverseOf rdf:resource="#definesCostStructure"/>
+    <rdfs:isDefinedBy rdf:resource="https://agentic-data-scraper.com/ontology/gist-dbc-bridge"/>
+    <rdfs:domain rdf:resource="#CostStructure"/>
+    <rdfs:range rdf:resource="#DataBusinessCanvas"/>
+    <rdfs:label>is cost structure of</rdfs:label>
+  </owl:ObjectProperty>
 
   <!-- Level 1-2: Gist to DBC Bridge Properties -->
   <owl:ObjectProperty rdf:about="#hasBusinessModel">
